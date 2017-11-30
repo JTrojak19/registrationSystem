@@ -6,8 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ListOfUserController extends Controller
 {
+    /**
+     * @Route("/")
+     */
     public function showListOfUsersAction()
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access denied');
+        $userManager = $this->get('fos_user.user_manager');
+        $users = $userManager->findUsers();
+
+        return $this->render('view.html.twig', array('users' =>   $users));
     }
 }
